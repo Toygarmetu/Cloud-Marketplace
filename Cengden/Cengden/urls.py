@@ -20,4 +20,11 @@ from marketplace import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('admin/', admin.site.urls),
+    path('categories/', views.categories, name='categories'),
+    path('login/', views.login, name='login'),
+    path('logout/', views.logout, name='logout'),
+    path('category_items/<str:category>/', views.category_items, name='category_items'),
+
+    
 ]

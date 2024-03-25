@@ -9,6 +9,18 @@ from django.shortcuts import render
 def index(request):
     return render(request, 'index.html')
 
+def categories(request):
+    return render(request, 'categories.html')
+
+def login(request):
+    return render(request, 'login.html')
+
+def logout(request):
+    return render(request, 'logout.html')
+
+def category_items(request):
+    return render(request, 'category_items.html')
+
 client = MongoClient('mongodb+srv://atestoygar:leamk123@cengden.gcx1t1k.mongodb.net/')
 
 dbname = client['cengden_db']
