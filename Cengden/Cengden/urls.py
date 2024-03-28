@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path
 from marketplace import views
 
+
+
 urlpatterns = [
     path('', views.index, name='index'),
     path('admin/', admin.site.urls),
@@ -25,6 +27,8 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('category_items/<str:category>/', views.category_items, name='category_items'),
+    path('item/<str:id>/', views.item_detail, name='item_detail'),
+
 
     
 ]

@@ -26,20 +26,24 @@ SECRET_KEY = 'django-insecure-pl5(m_=+bch1^i*76rhk28u!&g++ki@w-j_g$n(b^)hrr#*fu7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cloud-marketplace.onrender.com'] 
+ALLOWED_HOSTS = ['cloud-marketplace.onrender.com', '127.0.0.1'] 
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'marketplace',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'corsheaders',
+    'marketplace.apps.MarketplaceConfig',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True 
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'Cengden.urls'
@@ -72,19 +77,18 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Cengden.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+DATABASES = {
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'cengden_db',
+        'CLIENT': {
+            'host': 'mongodb+srv://atestoygar:leamk123@cengden.gcx1t1k.mongodb.net/',
+            'name': 'cengden_db',
+            'authMechanism': 'SCRAM-SHA-1',
+        }
+    }
+}
+    
 
 AUTH_PASSWORD_VALIDATORS = [
     {
