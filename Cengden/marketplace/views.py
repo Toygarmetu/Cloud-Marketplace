@@ -57,11 +57,20 @@ def index(request):
     items_list = []
     for category_name in ['computers', 'phones', 'private_lessons', 'vehicle']:
         category_collection = db[category_name]
-        category_items = list(category_collection.find().sort('created_at', DESCENDING).limit(25))  # Fetch some from each
+        # Fetch items from each category
+        category_items = list(category_collection.find().limit(25))  # Adjust the limit as needed
         items_list.extend(category_items)
-
-    items_list.sort(key=lambda x: x['created_at'], reverse=True)
     
+    # Convert ObjectId to datetime for sorting, using the ObjectId generation time as a fallback
+    for item in items_list:
+        if 'created_at' not in item:
+            # Use the ObjectId's generation time as a fallback
+            item['created_at'] = item['_id'].generation_time
+
+    # Now sort the combined list by 'created_at'
+    items_list.sort(key=lambda x: x['created_at'], reverse=True)
+
+    # Truncate the list to only include the latest 100 items
     items_list = items_list[:100]
 
     # Set up pagination
@@ -71,7 +80,6 @@ def index(request):
 
     client.close()
     return render(request, 'index.html', {'page_obj': page_obj})
-
 
 def item_detail(request, id):
     client = get_mongo_client()
