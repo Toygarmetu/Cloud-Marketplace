@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'marketplace.apps.MarketplaceConfig',
+    'accounts.apps.AccountsConfig',
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True 

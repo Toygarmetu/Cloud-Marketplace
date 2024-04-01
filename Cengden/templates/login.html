@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8">
+    <title>Login</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}"> <!-- Add this line -->
+    <script src='{% static "js/main.js" %}'></script>
+</head>
+<body>
+    <div class="container"> <!-- Consider wrapping your form in a container for better styling with Bootstrap -->
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-4">
+                <form action="{% url 'login' %}" method="post" class="mt-5">
+                    
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input type="text" name="username" class="form-control" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" name="password" class="form-control" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Login" class="btn btn-primary w-100">
+                    </div>
+                    <div class="text-center mt-3">
+                        <p>Don't have an account? <a href="{% url 'register' %}" class="btn-register">Register</a></p>
+                    </div>
+                </form>
+                <div>
+                    {% for message in messages %}
+                        <div class="alert alert-warning" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+</html>
