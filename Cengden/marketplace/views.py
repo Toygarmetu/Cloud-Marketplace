@@ -48,6 +48,30 @@ def itemApi(request, id=0):
         return JsonResponse("Deleted successfully", safe=False)
 
 
+
+def category_items(request, category_name):
+    client = MongoClient("mongodb+srv://atestoygar:leamk123@cengden.gcx1t1k.mongodb.net/?retryWrites=true&w=majority&appName=CENGDEN")
+    db = client['cengden_db']
+
+    # Fetch items from the specified category
+    category_collection = db[category_name]
+    category_items = list(category_collection.find())  # You might want to implement sorting or limiting here
+    
+    # Set up pagination for the items
+    paginator = Paginator(category_items, 10)  # Show 10 items per page
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    client.close()
+    
+    # Render the items to a template, passing the page_obj for pagination
+    return render(request, 'category_items.html', {'page_obj': page_obj, 'category_name': category_name})
+
+
+
+
+
+
 def index(request):
     # Use your MongoDB Atlas URI directly here
     client = MongoClient("mongodb+srv://atestoygar:leamk123@cengden.gcx1t1k.mongodb.net/?retryWrites=true&w=majority&appName=CENGDEN")
@@ -109,9 +133,6 @@ def login(request):
 
 def logout(request):
     return render(request, 'logout.html')
-
-def category_items(request):
-    return render(request, 'category_items.html')
 
 client = MongoClient('mongodb+srv://atestoygar:leamk123@cengden.gcx1t1k.mongodb.net/')
 

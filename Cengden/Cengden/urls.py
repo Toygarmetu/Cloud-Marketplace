@@ -26,9 +26,7 @@ urlpatterns = [
     path('categories/', views.categories, name='categories'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
-    path('category_items/<str:category>/', views.category_items, name='category_items'),
     path('item/<str:id>/', views.item_detail, name='item_detail'),
-
-
+    path('category_items/<str:category_name>/', views.category_items, name='category_items'),
     
 ]

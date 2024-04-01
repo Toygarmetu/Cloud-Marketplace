@@ -5,39 +5,61 @@
     
 <head>
     
-   <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
+
+
     <title>CENGden Marketplace</title>
-    <link rel="stylesheet" href="{% static 'styles.css' %}">
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9/smKNX6C7kwpTfDyAkFq/j5fDz1OUbTlTxH0GcdJa3nQy+8B8L+UJYBtIeQiVdY" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+
 </head>
 <body>
     <header>
         <h1>Welcome to CENGden Marketplace</h1>
         <nav>
-            <ul>
-                <li><a href="{% url 'index' %}">Home</a></li>
-                <li><a href="{% url 'categories' %}">Categories</a></li>
-                <li>{% if user.is_authenticated %}<a href="{% url 'logout' %}">Logout</a>{% else %}<a href="{% url 'login' %}">Login/Sign Up</a>{% endif %}</li>
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">CENGden Marketplace</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'categories' %}">Categories</a></li>
+                <li class="nav-item">
+                    {% if user.is_authenticated %}
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                    {% else %}
+                        <a class="nav-link" href="{% url 'login' %}">Login/Sign Up</a>
+                    {% endif %}
+                </li>
             </ul>
+        </div>
+    </div>
+</nav>
+
         </nav>
     </header>
 
-    <main>
+    <main class="container mt-4">
 
         <section class="categories">
             <h2>Categories</h2>
-            <ul>
-                <li><a href="{% url 'category_items' category='vehicles' %}">Vehicles</a></li>
-                <li><a href="{% url 'category_items' category='computers' %}">Computers</a></li>
-                <li><a href="{% url 'category_items' category='phones' %}">Phones</a></li>
-                <li><a href="{% url 'category_items' category='private_lessons' %}">Private Lessons</a></li>
-            </ul>
+            <div class="row">
+                <!-- Each category can be a column -->
+                <div class="col"><a href="{% url 'category_items' category_name='vehicle' %}">Vehicles</a></div>
+                <div class="col"><a href="{% url 'category_items' category_name='computers' %}">Computers</a></div>
+                <div class="col"><a href="{% url 'category_items' category_name='phones' %}">Phones</a></div>
+                <div class="col"><a href="{% url 'category_items' category_name='private_lessons' %}">Private Lessons</a></div>
+            </div>
         </section>
 
-        <section class="latest-items">
+
+
+        <section class="latest-items mt-4">
             <h2>Latest Items</h2>
-            <div class="items">
+            <div class="row">
                 {% for item in page_obj %}
             <div class="item">
                 <!-- Display the title and description for all items -->
@@ -86,16 +108,26 @@
                 {% endif %}
             </div>
     {% endfor %}
+    
             </div>
-            <div class="pagination">
-                {% if items.has_previous %}
-                    <a href="?page={{ items.previous_page_number }}">Previous</a>
-                {% endif %}
-                <span>Page {{ items.number }} of {{ items.paginator.num_pages }}</span>
-                {% if items.has_next %}
-                    <a href="?page={{ items.next_page_number }}">Next</a>
-                {% endif %}
-            </div>
+
+            <nav class="navbar fixed-bottom">
+    <div class="container-fluid">
+        <div class="pagination mx-auto">
+            {% if page_obj.has_previous %}
+                <a class="btn btn-outline-primary" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+            {% endif %}
+            <span class="mx-3">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+            {% if page_obj.has_next %}
+                <a class="btn btn-outline-primary" href="?page={{ page_obj.next_page_number }}">Next</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>
+
+            
+            
+            
         </section>
     </main>
 
@@ -103,5 +135,11 @@
     <footer>
         <p>&copy; 2024 CENGden Marketplace</p>
     </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js" integrity="sha384-eMNCOe7tC1doHpGo6xgWk5zT1cFJmXuyJzyxmVNaiq4jAD5T1ieHexPL1O4yjGUZ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.min.js" integrity="sha384-QJHtvGhmrtsI6bGvI1ZV2SDO3la8TfF5HH/6Lp6yRZwW8FvqaY+T5cE11YdT2KoK" crossorigin="anonymous"></script>
+
+
 </body>
 </html>
